@@ -2,6 +2,18 @@
 
 require '../bootstrap.php';
 
+use Imie\Entity\Post;
+
+if (isset($_POST['post'])) {
+    $post = new Post();
+    $post->setSubject($_POST['title']);
+    $post->setMessage($_POST['message']);
+    $post->setDate(new DateTime());
+
+    $entityManager->persist($post);
+    $entityManager->flush();
+}
+
 $posts = $entityManager->getRepository('Imie\Entity\Post')->findBy(
     array(),
     array('date' => 'DESC')
@@ -69,7 +81,7 @@ $posts = $entityManager->getRepository('Imie\Entity\Post')->findBy(
                                 <!-- main col left -->
                                 <div class="col-sm-5">
                                     <div class="well">
-                                        <form class="form-horizontal" role="form">
+                                        <form class="form-horizontal" role="form" method="post">
                                             <h4>What's New</h4>
                                             <div class="form-group" style="padding:14px;">
                                                 <input type="text" class="form-control" name="title" placeholder="Titre"/>
