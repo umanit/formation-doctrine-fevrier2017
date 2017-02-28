@@ -1,6 +1,18 @@
 <?php
 
-// code here
+require '../bootstrap.php';
+
+$post = $entityManager->getRepository('Imie\Entity\Post')->find($_GET['pid']);
+
+if (isset($_POST['edit'])) {
+    $post->setSubject($_POST['subject']);
+    $post->setMessage($_POST['message']);
+
+    $entityManager->persist($post);
+    $entityManager->flush();
+
+    header('Location: post.php');
+}
 
 ?>
 
@@ -61,13 +73,13 @@
                             <div class="row">
                                 <div class="col-sm-push-2 col-sm-8">
                                     <div class="well">
-                                        <form class="form-horizontal" role="form" method="POST" action="">
+                                        <form class="form-horizontal" role="form" method="POST" action="edit_post.php?pid=<?php print $post->getId(); ?>">
                                             <h4>Editer</h4>
                                             <div class="form-group">
-                                                <input class="form-control" type="text" name="subject" placeholder="Subject" value=""/>
+                                                <input class="form-control" type="text" name="subject" placeholder="Subject" value="<?php print $post->getSubject(); ?>"/>
                                             </div>
                                             <div class="form-group">
-                                                <textarea class="form-control" name="message" placeholder="Message"></textarea>
+                                                <textarea class="form-control" name="message" placeholder="Message"><?php print $post->getMessage(); ?></textarea>
                                             </div>
                                             <button class="btn btn-primary pull-right" name="edit" type="submit">Envoyer</button><ul class="list-inline"><li><a href=""><i class="glyphicon glyphicon-upload"></i></a></li><li><a href=""><i class="glyphicon glyphicon-camera"></i></a></li><li><a href=""><i class="glyphicon glyphicon-map-marker"></i></a></li></ul>
                                         </form>
