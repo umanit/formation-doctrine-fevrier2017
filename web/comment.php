@@ -2,9 +2,20 @@
 
 require '../bootstrap.php';
 
+use Imie\Entity\Comment;
+
 $postId = $_GET['pid'];
 // $post = $entityManager->getRepository('Imie\Entity\Post')->find($postId);
 $post = $entityManager->getRepository('Imie\Entity\Post')->findOneBy(array('id' => $postId));
+
+if (isset($_POST['comment'])) {
+    $comment = new Comment();
+    $comment->setMessage($_POST['message']);
+    $comment->setDate(new DateTime());
+
+    $entityManager->persist($comment);
+    $entityManager->flush();
+}
 
 ?>
 
@@ -113,7 +124,7 @@ $post = $entityManager->getRepository('Imie\Entity\Post')->findOneBy(array('id' 
 
                                 <div class="col-sm-push-2 col-sm-8">
                                     <div class="well">
-                                        <form class="form-horizontal" role="form">
+                                        <form class="form-horizontal" role="form" method="POST" action="comment.php?pid=<?php print $post->getId(); ?>">
                                             <h4>Commenter</h4>
                                             <div class="form-group" style="padding:14px;">
                                                 <textarea class="form-control" name="message" placeholder="Message"></textarea>
