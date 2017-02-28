@@ -17,6 +17,11 @@ if (isset($_POST['comment'])) {
     $entityManager->flush();
 }
 
+$comments = $entityManager->getRepository('Imie\Entity\Comment')->findBy(
+    array(),
+    array('date' => 'ASC')
+);
+
 ?>
 
 
@@ -97,31 +102,16 @@ if (isset($_POST['comment'])) {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-push-2 col-sm-8">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            Date<br/>
-                                            Comment.
+                                <?php foreach ($comments as $comment): ?>
+                                    <div class="col-sm-push-2 col-sm-8">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <?php print $comment->getDate()->format('d/m/Y H:i'); ?><br/>
+                                                <?php print $comment->getMessage(); ?>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-push-2 col-sm-8">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            Date<br/>
-                                            Comment.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-push-2 col-sm-8">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            Date<br/>
-                                            Comment.
-                                        </div>
-                                    </div>
-                                </div>
-
+                                <?php endforeach; ?>
                                 <div class="col-sm-push-2 col-sm-8">
                                     <div class="well">
                                         <form class="form-horizontal" role="form" method="POST" action="comment.php?pid=<?php print $post->getId(); ?>">
