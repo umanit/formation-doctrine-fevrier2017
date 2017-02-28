@@ -14,10 +14,15 @@ if (isset($_POST['post'])) {
     $entityManager->flush();
 }
 
-$posts = $entityManager->getRepository('Imie\Entity\Post')->findBy(
-    array(),
-    array('date' => 'DESC')
-);
+if (isset($_GET['search-word'])) {
+    $posts = $entityManager->getRepository('Imie\Entity\Post')->search($_GET['search-word']);
+} else {
+    $posts = $entityManager->getRepository('Imie\Entity\Post')->findBy(
+        array(),
+        array('date' => 'DESC')
+    );
+}
+
 
 ?>
 
