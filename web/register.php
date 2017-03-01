@@ -1,6 +1,21 @@
 <?php
 
-// Code here
+require '../bootstrap.php';
+
+use Imie\Entity\User;
+
+if (isset($_POST['register'])) {
+    $user = new User();
+    $user->setEmail($_POST['email']);
+    $user->setPassword($_POST['password']);
+    $user->setLastname($_POST['lastname']);
+    $user->setFirstname($_POST['firstname']);
+    $user->setDescription($_POST['description']);
+    $user->setBirthDate(new DateTime($_POST['birthDate']));
+
+    $entityManager->persist($user);
+    $entityManager->flush();
+}
 
 ?>
 
