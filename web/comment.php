@@ -19,6 +19,13 @@ if (isset($_POST['comment'])) {
     $entityManager->flush();
 }
 
+if (isset($_GET['removeId'])) {
+    $comment = $entityManager->getRepository('Imie\Entity\Comment')->find($_GET['removeId']);
+
+    $entityManager->remove($comment);
+    $entityManager->flush();
+}
+
 $comments = $entityManager->getRepository('Imie\Entity\Comment')->findBy(
     array('post' => $post),
     array('date' => 'ASC')
@@ -98,6 +105,7 @@ $comments = $entityManager->getRepository('Imie\Entity\Comment')->findBy(
                                 <?php foreach ($comments as $comment): ?>
                                     <div class="col-sm-push-2 col-sm-8">
                                         <div class="panel panel-default">
+                                            <a href="comment.php?pid=<?php print $post->getId(); ?>&removeId=<?php print $comment->getId(); ?>">Remove</a>
                                             <div class="panel-body">
                                                 <?php print $comment->getDate()->format('d/m/Y H:i'); ?><br/>
                                                 <?php print $comment->getMessage(); ?>

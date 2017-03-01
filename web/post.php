@@ -15,6 +15,13 @@ if (isset($_POST['post'])) {
     $entityManager->flush();
 }
 
+if (isset($_GET['removeId'])) {
+    $post = $entityManager->getRepository('Imie\Entity\Post')->find($_GET['removeId']);
+
+    $entityManager->remove($post);
+    $entityManager->flush();
+}
+
 if (isset($_GET['search-word'])) {
     $posts = $entityManager->getRepository('Imie\Entity\Post')->search($_GET['search-word']);
 } else {
@@ -106,6 +113,7 @@ if (isset($_GET['search-word'])) {
                                             <div class="panel-heading">
                                                 <a href="comment.php?pid=<?php print $post->getId(); ?>" class="pull-right">Link</a>
                                                 <a href="edit_post.php?pid=<?php print $post->getId(); ?>" class="pull-right">Edit</a>
+                                                <a href="post.php?removeId=<?php print $post->getId(); ?>" class="pull-right">Remove</a>
 
                                                 <h4><?php print $post->getSubject(); ?></h4>
                                                 <?php print $post->getDate()->format('d/m/Y H:i'); ?>
