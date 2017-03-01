@@ -21,5 +21,6 @@ $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
 $entityManager = EntityManager::create($dbParams, $config);
 
 if (!empty($_SESSION['user'])) {
+    // Permet à doctrine de récupérer une référence à notre objet "User" en session
     $currentUser = $entityManager->merge($_SESSION['user']);
 }
