@@ -1,6 +1,16 @@
 <?php
 
-// code here
+require '../bootstrap.php';
+
+if (isset($_POST['login'])) {
+    // $user = $entityManager->getRepository('Imie\Entity\User')->findOneBy(array(
+    //     'email'    => $_POST['username'],
+    //     'password' => $_POST['password']
+    // ));
+
+    $user = $entityManager->getRepository('Imie\Entity\User')->getUserByLogin($_POST['username'], $_POST['password']);
+    $_SESSION['user'] = $user;
+}
 
 ?>
 
