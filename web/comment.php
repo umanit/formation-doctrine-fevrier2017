@@ -20,7 +20,7 @@ if (isset($_POST['comment'])) {
 }
 
 $comments = $entityManager->getRepository('Imie\Entity\Comment')->findBy(
-    array(),
+    array('post' => $post),
     array('date' => 'ASC')
 );
 
