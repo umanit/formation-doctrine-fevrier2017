@@ -12,6 +12,8 @@ if (isset($_POST['comment'])) {
     $comment = new Comment();
     $comment->setMessage($_POST['message']);
     $comment->setDate(new DateTime());
+    $comment->setAuthor($currentUser);
+    $comment->setPost($post);
 
     $entityManager->persist($comment);
     $entityManager->flush();
@@ -90,15 +92,6 @@ $comments = $entityManager->getRepository('Imie\Entity\Comment')->findBy(
                                         </div>
                                         <div class="panel-body">
                                             <?php print $post->getMessage(); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-push-2 col-sm-8">
-                                    <div class="panel panel-default">
-                                        <div class="panel-body">
-                                            Date<br/>
-                                            Comment.
                                         </div>
                                     </div>
                                 </div>

@@ -9,6 +9,7 @@ if (isset($_POST['post'])) {
     $post->setSubject($_POST['title']);
     $post->setMessage($_POST['message']);
     $post->setDate(new DateTime());
+    $post->setAuthor($currentUser);
 
     $entityManager->persist($post);
     $entityManager->flush();
@@ -103,7 +104,7 @@ if (isset($_GET['search-word'])) {
                                     <?php foreach ($posts as $post): ?>
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
-                                                <a href="comment.php?pid=<?php print $post->getId(); ?>" class="pull-right">Link</a> 
+                                                <a href="comment.php?pid=<?php print $post->getId(); ?>" class="pull-right">Link</a>
                                                 <a href="edit_post.php?pid=<?php print $post->getId(); ?>" class="pull-right">Edit</a>
 
                                                 <h4><?php print $post->getSubject(); ?></h4>
