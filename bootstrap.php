@@ -19,3 +19,7 @@ $dbParams = array(
 
 $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
 $entityManager = EntityManager::create($dbParams, $config);
+
+if (!empty($_SESSION['user'])) {
+    $currentUser = $entityManager->merge($_SESSION['user']);
+}
